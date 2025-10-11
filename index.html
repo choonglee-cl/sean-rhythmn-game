@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean</title>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron|Russo+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="assets/images/rh_right.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px #00ffff;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .option-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00ffff;
+        }
+
+        .form-group {
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .controls-info {
+            margin-top: 3rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .controls-info h3 {
+            color: #00ffff;
+            margin-bottom: 1rem;
+        }
+
+        .controls-info p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .youtube-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .youtube-preview.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SEAN's Rythmn Game</h1>
+        
+        <div class="game-options">
+            <div class="option-card">
+                <h2>🎵 Music Selection</h2>
+                <div class="form-group">
+                    <label for="musicType">Music Source:</label>
+                    <select id="musicType">
+                        <option value="local">Local Music</option>
+                        <option value="youtube">YouTube</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="localMusicGroup">
+                    <label for="localSong">Select Song:</label>
+                    <select id="localSong">
+                        <option value="paranoia.mp3">Paranoia</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="youtubeGroup" style="display: none;">
+                    <label for="youtubeUrl">YouTube URL:</label>
+                    <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+                    <div class="youtube-preview" id="youtubePreview">
+                        <p>YouTube video will play in background</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="option-card">
+                <h2>🎮 Game Settings</h2>
+                <div class="form-group">
+                    <label for="difficulty">Difficulty Level:</label>
+                    <select id="difficulty">
+                        <option value="light">Light</option>
+                        <option value="standard">Standard</option>
+                        <option value="heavy">Heavy</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gameMode">Game Mode:</label>
+                    <select id="gameMode">
+                        <option value="single">Single Player</option>
+                        <option value="multi">Multi Player</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <button class="start-button" onclick="startGame()">START GAME</button>
+        
+        <div class="controls-info">
+            <h3>🎮 Controls</h3>
+            <p><strong>Player 1 (Left):</strong> A (←), S (↓), W (↑), D (→)</p>
+            <p><strong>Player 2 (Right):</strong> J (←), K (↓), I (↑), L (→)</p>
+            <p><strong>Pause:</strong> ESC key</p>
+        </div>
+    </div>
+
+    <script>
+        // Music type change handler
+        document.getElementById('musicType').addEventListener('change', function() {
+            const musicType = this.value;
+            const localGroup = document.getElementById('localMusicGroup');
+            const youtubeGroup = document.getElementById('youtubeGroup');
+            const youtubePreview = document.getElementById('youtubePreview');
+            
+            if (musicType === 'local') {
+                localGroup.style.display = 'block';
+                youtubeGroup.style.display = 'none';
+                youtubePreview.classList.remove('show');
+            } else {
+                localGroup.style.display = 'none';
+                youtubeGroup.style.display = 'block';
+            }
+        });
+
+        // YouTube URL change handler
+        document.getElementById('youtubeUrl').addEventListener('input', function() {
+            const url = this.value;
+            const preview = document.getElementById('youtubePreview');
+            
+            if (url && url.includes('youtube.com')) {
+                preview.classList.add('show');
+            } else {
+                preview.classList.remove('show');
+            }
+        });
+
+        function startGame() {
+            const musicType = document.getElementById('musicType').value;
+            const difficulty = document.getElementById('difficulty').value;
+            const gameMode = document.getElementById('gameMode').value;
+            
+            let gameUrl = `endless.html?difficulty=${difficulty}&mode=${gameMode}`;
+            
+            if (musicType === 'youtube') {
+                const youtubeUrl = document.getElementById('youtubeUrl').value;
+                if (!youtubeUrl) {
+                    alert('Please enter a YouTube URL');
+                    return;
+                }
+                gameUrl += `&youtube=${encodeURIComponent(youtubeUrl)}`;
+            } else {
+                const localSong = document.getElementById('localSong').value;
+                gameUrl += `&song=${localSong}`;
+            }
+            
+            window.location.href = gameUrl;
+        }
+
+        // Load available songs dynamically
+        fetch('assets/songs/')
+            .then(response => response.text())
+            .then(html => {
+                // Parse HTML to extract song files
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = doc.querySelectorAll('a[href$=".mp3"]');
+                const songSelect = document.getElementById('localSong');
+                
+                // Clear existing options
+                songSelect.innerHTML = '';
+                
+                links.forEach(link => {
+                    const fileName = link.href.split('/').pop();
+                    const option = document.createElement('option');
+                    option.value = fileName;
+                    option.textContent = fileName.replace('.mp3', '');
+                    songSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.log('Could not load songs list, using default');
+            });
+    </script>
+</body>
+</html>
